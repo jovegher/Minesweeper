@@ -51,11 +51,15 @@ public void displayWinningMessage()
 }
 public boolean isValid(int r, int c)
 {
-  //your code here
+  if ((r >= 0 && r < NUM_ROWS) && (c >=0 && c < NUM_COLUMNS))
+  return true;
+  else 
   return false;
 }
 public int countMines(int row, int col)
 {
+  if (isValid(row, col) == true) 
+  
   int numMines = 0;
 
   return numMines;
