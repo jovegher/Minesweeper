@@ -24,10 +24,11 @@ void setup ()
 }
 public void setMines()
 {
-  if (!mines.contains(buttons[NUM_ROWS][NUM_COLUMNS])
-    mines.add(buttons[NUM_ROWS][NUM_COLUMNS]);
+  for (int m = 0; m < MINES; m++)
+  if (!mines.contains(buttons[NUM_ROWS][NUM_COLUMNS]))
+    mines.add(buttons[NUM_ROWS][NUM_COLUMNS]); 
   else 
-  return 
+  
 }
 public void draw ()
 {
