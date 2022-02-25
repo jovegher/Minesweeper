@@ -42,7 +42,7 @@ public boolean isWon()
   //your code here
   for (int r = 0; r < NUM_ROWS; r++) {
     for (int c = 0; c < NUM_COLUMNS; c++) {
-      if (!mines.contains(buttons[r][c] && !buttons[r][c].isClicked())) {
+      if (!(mines == flagged)) {
         return false;
       }
     }
@@ -52,7 +52,7 @@ public boolean isWon()
 public void displayLosingMessage()
 {
   //your code here
-  for (int i = 0; i < mines.size; i++) {
+  for (int i = 0; i < MINES; i++) {
     mines.get(i).mousePressed();
     fill(255);
     for (int r = 0; r < NUM_ROWS; r++)
@@ -69,7 +69,7 @@ public void displayWinningMessage()
   //your code here
   for (int r = 0; r < NUM_ROWS; r++) {
     for (int c = 0; c < NUM_COLUMNS; c++) {
-      buttons[r][c].setLabel();
+      buttons[r][c].setLabel("");
       buttons[10][9].setLabel("G");
       buttons[10][10].setLabel("G");
     }
@@ -122,7 +122,7 @@ public class MSButton
 {
   private int myRow, myCol;
   private float x, y, width, height;
-  private boolean clicked, flagged;
+  public boolean clicked, flagged;
   private String myLabel;
 
   public MSButton ( int row, int col )
@@ -149,9 +149,10 @@ public class MSButton
     if (flagged == false) {
       clicked = false;
     } else if (mines.contains(this)) {
+      displayLosingMessage();
       for (int r = 0; r < NUM_ROWS; r++) {
         for (int c = 0; c < NUM_COLUMNS; c++) {
-          if (buttons[r][c] == false) {
+          if (!mines.contains(this)) {
             buttons[r][c].mousePressed();
           }
         }
@@ -187,3 +188,4 @@ public class MSButton
   {
     return flagged;
   }
+}
