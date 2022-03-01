@@ -35,7 +35,7 @@ public void draw ()
   if (isWon() == true)
     displayWinningMessage();
   else  
-    displayLosingMessage();
+  displayLosingMessage();
 }
 public boolean isWon()
 {
@@ -47,8 +47,9 @@ public boolean isWon()
       }
     }
   }
-  return true;
+        return true;
 }
+
 public void displayLosingMessage()
 {
   //your code here
@@ -159,33 +160,39 @@ public class MSButton
       }
     } else if (countMines(myRow, myCol) > 0) {
       setLabel(countMines(myRow, myCol));
+    } else {
+      for (int r = 0; r < NUM_ROWS; r++) {
+        for (int c = 0; c < NUM_COLUMNS; c++) {
+          buttons[r][c].mousePressed();
+        }
+      }
     }
   }
-  public void draw () 
-  {    
-    if (flagged)
-      fill(0);
-    else if ( clicked && mines.contains(this) ) 
-      fill(255, 0, 0);
-    else if (clicked)
-      fill( 200 );
-    else 
-    fill( 100 );
+    public void draw () 
+    {    
+      if (flagged)
+        fill(0);
+      else if ( clicked && mines.contains(this) ) 
+        fill(255, 0, 0);
+      else if (clicked)
+        fill( 200 );
+      else 
+      fill( 100 );
 
-    rect(x, y, width, height);
-    fill(0);
-    text(myLabel, x+width/2, y+height/2);
-  }
-  public void setLabel(String newLabel)
-  {
-    myLabel = newLabel;
-  }
-  public void setLabel(int newLabel)
-  {
-    myLabel = ""+ newLabel;
-  }
-  public boolean isFlagged()
-  {
-    return flagged;
-  }
+      rect(x, y, width, height);
+      fill(0);
+      text(myLabel, x+width/2, y+height/2);
+    }
+    public void setLabel(String newLabel)
+    {
+      myLabel = newLabel;
+    }
+    public void setLabel(int newLabel)
+    {
+      myLabel = ""+ newLabel;
+    }
+    public boolean isFlagged()
+    {
+      return flagged;
+    }
 }
