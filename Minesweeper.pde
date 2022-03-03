@@ -159,6 +159,7 @@ public void displayLosingMessage()
           }
       }
     }
+}
     public void draw () 
     {    
       if (flagged)
