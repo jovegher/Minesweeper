@@ -1,7 +1,7 @@
 import de.bezier.guido.*;
 public final static int NUM_ROWS = 20;
 public final static int NUM_COLUMNS = 20;
-public final static int MINES = 30;
+public final static int MINES = 50;
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> mines = new ArrayList <MSButton>();
 
@@ -19,7 +19,7 @@ void setup ()
     for (int c = 0; c < NUM_COLUMNS; c++)
       buttons[r][c] = new MSButton(r, c);
 
-  for (int i = 0; i < MINES; i++)
+  for (int i = 0; i <= MINES; i++)
     setMines();
 }
 public void setMines()
@@ -33,23 +33,22 @@ public void draw ()
 {
   background( 0 );
   if (isWon() == true)
-    displayWinningMessage();
-  else  
-  displayLosingMessage();
+    displayWinningMessage();  
 }
 public boolean isWon()
 {
   //your code here
-  if (!(mines.get(i) == flagged)) {
+  for (int i = 0; i < MINES; i++)
+  if (!(mines.get(i).isFlagged())) {
     return false;
-  }
+  } 
   return true;
 }
 
 public void displayLosingMessage()
 {
   //your code here
-  for (int i = 0; i < MINES; i++) {
+  for (int i = 0; i <= MINES; i++) {
     mines.get(i).mousePressed();
     fill(255);
     for (int r = 0; r < NUM_ROWS; r++) {
@@ -139,7 +138,9 @@ public class MSButton
   // called by manager
   public void mousePressed () 
   {
+    if (mouseButton == LEFT) {
     clicked = true;
+    }
     //your code here
     if (mouseButton == RIGHT) {
       flagged = !flagged;
@@ -153,22 +154,18 @@ public class MSButton
     }
     if (isValid(myRow, myCol) == false || buttons[myRow][myCol].isFlagged() == false) {
     } else {
-      for (int j = myRow-1; j < myRow-1; j++) {
-        for (int m = myCol-1; m < myCol+1; m++) { 
-          if (isValid(j,m) == true)
-          buttons[j][m].mousePressed();
+          if (isValid(myRow,myCol) == true)
+          buttons[myRow][myCol].mousePressed();
         }
       }
-    }
-  }
   public void draw () 
   {    
     if (flagged)
       fill(0);
-    else if ( clicked && mines.contains(this) ) 
-      fill(255, 0, 0);
+    else if (clicked && mines.contains(this) ) 
+      fill(240, 5, 5);
     else if (clicked)
-      fill( 200 );
+      fill(83, 83, 83);
     else 
     fill( 100 );
 
