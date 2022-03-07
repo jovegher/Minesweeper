@@ -1,4 +1,5 @@
 import de.bezier.guido.*;
+public boolean gameOver = false;
 public final static int NUM_ROWS = 20;
 public final static int NUM_COLUMNS = 20;
 public final static int MINES = 50;
@@ -33,15 +34,15 @@ public void draw ()
 {
   background( 0 );
   if (isWon() == true)
-    displayWinningMessage();  
+    displayWinningMessage();
 }
 public boolean isWon()
 {
   //your code here
   for (int i = 0; i < MINES; i++)
-  if (!(mines.get(i).isFlagged())) {
-    return false;
-  } 
+    if (!(mines.get(i).isFlagged())) {
+      return false;
+    } 
   return true;
 }
 
@@ -139,25 +140,38 @@ public class MSButton
   public void mousePressed () 
   {
     if (mouseButton == LEFT) {
-    clicked = true;
+      clicked = true;
     }
     //your code here
-    if (mouseButton == RIGHT) {
-      flagged = !flagged;
-    }
-    if (flagged == false) {
-      clicked = false;
-    } else if (mines.contains(this)) {
-      displayLosingMessage();
-    } else if (countMines(myRow, myCol) > 0) {
-      setLabel(countMines(myRow, myCol));
-    }
-    if (isValid(myRow, myCol) == false || buttons[myRow][myCol].isFlagged() == false) {
-    } else {
-          if (isValid(myRow,myCol) == true)
-          buttons[myRow][myCol].mousePressed();
+    if (!isWon() && !gameOver) {
+      if (mouseButton == RIGHT && myLabel == "") { 
+        if (mines.contains(this)) {
+          clicked = false;
+          flagged = !flagged;
+        } else if (clicked == false) {
+          clicked = false;
+          flagged = !flagged;
+        }
+      } else if (!flagged) {
+        clicked = true;
+        if (mines.contains(this)) {
+          gameOver = true;
+          displayLosingMessage();
+        } else if (countMines(myRow, myCol) > 0) {
+          setLabel("" + countMines(myRow, myCol));
+        }
+        if (isValid(myRow, myCol) == false || buttons[myRow][myCol].isFlagged() == false) {
+        } else {
+          for (int row = -1; row < 2; row++) {
+            for (int col = -1; col < 2; col++) {
+              if (isValid(myRow + row, myCol + col) && buttons[myRow + row][myCol + col].clicked == true)
+                buttons[myRow + row][myCol + col].mousePressed();
+            }
+          }
         }
       }
+    }
+  }
   public void draw () 
   {    
     if (flagged)
