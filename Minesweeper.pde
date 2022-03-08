@@ -107,7 +107,7 @@ public int countMines(int row, int col)
       numMines++;
   }
   if (isValid(row+1, col)) {
-    if (mines.contains(buttons[row+1][col+1]))
+    if (mines.contains(buttons[row+1][col]))
       numMines++;
   }
   if (isValid(row+1, col+1)) {
@@ -159,13 +159,12 @@ public class MSButton
           displayLosingMessage();
         } else if (countMines(myRow, myCol) > 0) {
           setLabel("" + countMines(myRow, myCol));
-        }
-        if (isValid(myRow, myCol) == false || buttons[myRow][myCol].isFlagged() == false) {
         } else {
           for (int row = -1; row < 2; row++) {
             for (int col = -1; col < 2; col++) {
-              if (isValid(myRow + row, myCol + col) && buttons[myRow + row][myCol + col].clicked == true)
+              if (isValid(myRow + row, myCol + col) && buttons[myRow + row][myCol + col].clicked == false) {
                 buttons[myRow + row][myCol + col].mousePressed();
+              }
             }
           }
         }
@@ -175,13 +174,15 @@ public class MSButton
   public void draw () 
   {    
     if (flagged)
-      fill(0);
-    else if (clicked && mines.contains(this) ) 
-      fill(240, 5, 5);
+      fill(255);
+    else if (isWon() && mines.contains(this)) {
+      clicked = false;
+    } else if (clicked && mines.contains(this))
+      fill(255, 0, 0);
     else if (clicked)
       fill(83, 83, 83);
     else 
-    fill( 100 );
+    fill(100, 100, 100);
 
     rect(x, y, width, height);
     fill(0);
